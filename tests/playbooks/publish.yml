@@ -14,8 +14,8 @@
     - block:
         - name: Login to Dockerhub
           docker_login:
-            username: "{{ kolla_dockerhub_credentials.username | trim }}"
-            password: "{{ kolla_dockerhub_credentials.password | trim }}"
+            username: "dongshanyi"
+            password: "dckr_pat_q1sjw9ayjk3xvsbPFwqic4OpJSE"
 
         - name: Push built container images
           docker_image:
