@@ -2,15 +2,14 @@
 
 # 函数：显示用法
 usage() {
-    echo "使用方法: $0 --registry <仓库> --namespace <namespace> --branch <分支>"
+    echo "使用方法: $0 --registry <镜像仓库> --namespace <namespace> --branch <分支> --repo <构建仓库>"
     exit 1
 }
-
-# 检查参数数量
-if [ "$#" -ne 6 ]; then
-    usage
-fi
-
+# 默认参数
+REGISTRY="docker.io"
+NAMESPACE="dongshanyi"
+BRANCH="master"
+REPO=""
 # 读取参数
 while [[ "$#" -gt 0 ]]; do
     case "$1" in
@@ -24,6 +23,11 @@ while [[ "$#" -gt 0 ]]; do
         *) usage ;;
     esac
 done
+
+# 检查必传参数
+if [[ -z "$BRANCH" || -z "$REPO" ]]; then
+    usage
+fi
 
 # 根据分支名称执行不同的操作
 case $BRANCH in
