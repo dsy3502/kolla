@@ -29,14 +29,14 @@ done
 case $BRANCH in
     master)
         echo "执行针对 master 分支的操作..."
-        ./tools/build.py $REPO --config-file ./etc/kolla/kolla-build.conf --push --registry docker.io --namespace dongshanyi --tag latest
+        ./tools/build.py $REPO --config-file ./etc/kolla/kolla-build.conf --push --registry $REGISTRY --namespace $NAMESPACE --tag latest
         ;;
     develop)
         echo "执行针对 develop 分支的操作..."
-        ./tools/build.py $REPO --config-file ./etc/kolla/kolla-build.conf --push --registry docker.io --namespace dongshanyi --tag develop
+        ./tools/build.py $REPO --config-file ./etc/kolla/kolla-build.conf --push --registry $REGISTRY --namespace $NAMESPACE --tag develop
         ;;
     *)
         echo "执行针对其他分支 ($BRANCH) 的操作..."
-        ./tools/build.py $REPO --config-file ./etc/kolla/kolla-build.conf --push --registry docker.io --namespace dongshanyi --tag $BRANCH
+        ./tools/build.py $REPO --config-file ./etc/kolla/kolla-build.conf --push --registry $REGISTRY --namespace $NAMESPACE --tag $BRANCH
         ;;
 esac
