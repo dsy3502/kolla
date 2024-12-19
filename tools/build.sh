@@ -17,6 +17,7 @@ while [[ "$#" -gt 0 ]]; do
         --registry) REGISTRY="$2"; shift 2 ;;
         --namespace) NAMESPACE="$2"; shift 2 ;;
         --branch) BRANCH="$2"; shift 2 ;;
+        --repo) REPO="$2"; shift 2 ;;
         -r) REGISTRY="$2"; shift 2 ;;
         -n) NAMESPACE="$2"; shift 2 ;;
         -b) BRANCH="$2"; shift 2 ;;
@@ -28,14 +29,14 @@ done
 case $BRANCH in
     master)
         echo "执行针对 master 分支的操作..."
-        ./tools/build.py nova --config-file ./etc/kolla/kolla-build.conf --push --registry docker.io --namespace dongshanyi --tag latest
+        ./tools/build.py $REPO --config-file ./etc/kolla/kolla-build.conf --push --registry docker.io --namespace dongshanyi --tag latest
         ;;
     develop)
         echo "执行针对 develop 分支的操作..."
-        ./tools/build.py nova --config-file ./etc/kolla/kolla-build.conf --push --registry docker.io --namespace dongshanyi --tag develop
+        ./tools/build.py $REPO --config-file ./etc/kolla/kolla-build.conf --push --registry docker.io --namespace dongshanyi --tag develop
         ;;
     *)
         echo "执行针对其他分支 ($BRANCH) 的操作..."
-        ./tools/build.py nova --config-file ./etc/kolla/kolla-build.conf --push --registry docker.io --namespace dongshanyi --tag $BRANCH
+        ./tools/build.py $REPO --config-file ./etc/kolla/kolla-build.conf --push --registry docker.io --namespace dongshanyi --tag $BRANCH
         ;;
 esac
