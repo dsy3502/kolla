@@ -620,7 +620,22 @@ class KollaWorker(object):
                     installation['reference'] = self.conf[section]['reference']
                 installation['enabled'] = self.conf[section]['enabled']
             return installation
-
+        # 添加跳过镜像构建的逻辑
+        def should_skip_image(image_name):
+            # 1. 通过命令行参数跳过
+            if image_name in self.conf.skip_images:
+                return True
+                
+            # 2. 通过配置文件跳过
+            if image_name in self.conf.get('skip_images', []):
+                return True
+                
+            # 3. 通过环境变量跳过
+            skip_env = os.environ.get('KOLLA_SKIP_IMAGES', '')
+            if image_name in skip_env.split(','):
+                return True
+                
+            return False
         all_sections = (set(self.conf._groups.keys()) |
                         set(self.conf.list_all_sections()))
 
@@ -629,6 +644,11 @@ class KollaWorker(object):
             with open(os.path.join(path, 'Dockerfile')) as f:
                 content = f.read()
             image_name = os.path.basename(path)
+            
+             # 检查是否需要跳过该镜像
+            if should_skip_image(image_name):
+                LOG.info('Skipping image build: %s', image_name)
+                continue
             canonical_name = (self.namespace + '/' + self.image_prefix +
                               image_name + ':' + self.tag)
             parent_search_pattern = re.compile(r'^FROM.*$', re.MULTILINE)
