@@ -246,7 +246,7 @@ _CLI_OPTS = [
     cfg.StrOpt('engine', default='docker', choices=['docker', 'podman'],
                help='Container engine to build images on.'),
     cfg.StrOpt('podman_base_url', default='unix:///run/podman/podman.sock',
-               help='Path to podman socket.')
+               help='Path to podman socket.'),
     cfg.ListOpt('skip-images', default=[],help='Skip building certain images')
 ]
 
