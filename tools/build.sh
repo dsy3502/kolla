@@ -10,6 +10,7 @@ REGISTRY="docker.io"
 NAMESPACE="dongshanyi"
 BRANCH="master"
 REPO=""
+SKIP_IMAGES=""
 # 读取参数
 while [[ "$#" -gt 0 ]]; do
     case "$1" in
@@ -17,6 +18,7 @@ while [[ "$#" -gt 0 ]]; do
         --namespace) NAMESPACE="$2"; shift 2 ;;
         --branch) BRANCH="$2"; shift 2 ;;
         --repo) REPO="$2"; shift 2 ;;
+        --skip-images) SKIP_IMAGES="$2"; shift 2 ;;
         -r) REGISTRY="$2"; shift 2 ;;
         -n) NAMESPACE="$2"; shift 2 ;;
         -b) BRANCH="$2"; shift 2 ;;
@@ -35,13 +37,13 @@ case $BRANCH in
         echo "执行针对 master 分支的操作..."
         docker pull $REGISTRY/dongshanyi/base:latest
         docker pull $REGISTRY/dongshanyi/openstack-base:latest
-        ./tools/build.py $REPO --config-file ./etc/kolla/kolla-build.conf --push --registry $REGISTRY --namespace $NAMESPACE --tag latest --skip-existing nova-libvirt,base,openstack-base --push-threads 4
+        ./tools/build.py $REPO --config-file ./etc/kolla/kolla-build.conf --push --registry $REGISTRY --namespace $NAMESPACE --tag latest --skip-images $SKIP_IMAGES  --push-threads 4
         ;;
     develop)
         echo "执行针对 develop 分支的操作..."
         docker pull $REGISTRY/dongshanyi/base:develop
         docker pull $REGISTRY/dongshanyi/openstack-base:develop
-        ./tools/build.py $REPO --config-file ./etc/kolla/kolla-build.conf --push --registry $REGISTRY --namespace $NAMESPACE --tag develop --skip-images nova-libvirt,base,openstack-base --push-threads 4
+        ./tools/build.py $REPO --config-file ./etc/kolla/kolla-build.conf --push --registry $REGISTRY --namespace $NAMESPACE --tag develop --skip-images $SKIP_IMAGES --push-threads 4
         ;;
     *)
         echo "执行针对其他分支 ($BRANCH) 的操作..."
