@@ -39,8 +39,8 @@ case $BRANCH in
         ;;
     develop)
         echo "执行针对 develop 分支的操作..."
-        docker pull ${{ secrets.ALIYUN_REGISTRY_URL }}/dongshanyi/base:develop
-        docker pull ${{ secrets.ALIYUN_REGISTRY_URL }}/dongshanyi/openstack-base:develop
+        docker pull $REGISTRY/dongshanyi/base:develop
+        docker pull $REGISTRY/dongshanyi/openstack-base:develop
         ./tools/build.py $REPO --config-file ./etc/kolla/kolla-build.conf --push --registry $REGISTRY --namespace $NAMESPACE --tag develop
         ;;
     *)
