@@ -33,15 +33,15 @@ fi
 case $BRANCH in
     master)
         echo "执行针对 master 分支的操作..."
-        docker pull ${{ secrets.ALIYUN_REGISTRY_URL }}/dongshanyi/base:latest
-        docker pull ${{ secrets.ALIYUN_REGISTRY_URL }}/dongshanyi/openstack-base:latest
-        ./tools/build.py $REPO --config-file ./etc/kolla/kolla-build.conf --push --registry $REGISTRY --namespace $NAMESPACE --tag latest --skip-existing
+        docker pull $REGISTRY/dongshanyi/base:latest
+        docker pull $REGISTRY/dongshanyi/openstack-base:latest
+        ./tools/build.py $REPO --config-file ./etc/kolla/kolla-build.conf --push --registry $REGISTRY --namespace $NAMESPACE --tag latest --skip-existing nova-libvirt,base,openstack-base --push-threads 4
         ;;
     develop)
         echo "执行针对 develop 分支的操作..."
         docker pull $REGISTRY/dongshanyi/base:develop
         docker pull $REGISTRY/dongshanyi/openstack-base:develop
-        ./tools/build.py $REPO --config-file ./etc/kolla/kolla-build.conf --push --registry $REGISTRY --namespace $NAMESPACE --tag develop --skip-existing
+        ./tools/build.py $REPO --config-file ./etc/kolla/kolla-build.conf --push --registry $REGISTRY --namespace $NAMESPACE --tag develop --skip-images nova-libvirt,base,openstack-base --push-threads 4
         ;;
     *)
         echo "执行针对其他分支 ($BRANCH) 的操作..."
