@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -v 
 # 函数：显示用法
 usage() {
     echo "使用方法: $0 --registry <镜像仓库> --namespace <namespace> --branch <分支> --repo <构建仓库>"
