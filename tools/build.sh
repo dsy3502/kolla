@@ -35,13 +35,13 @@ fi
 case $BRANCH in
     master)
         echo "执行针对 master 分支的操作..."
-        docker pull $REGISTRY/dongshanyi/base:latest
+        #docker pull $REGISTRY/dongshanyi/base:latest
         docker pull $REGISTRY/dongshanyi/openstack-base:latest
         ./tools/build.py $REPO --config-file ./etc/kolla/kolla-build.conf --push --registry $REGISTRY --namespace $NAMESPACE --tag latest --skip-images $SKIP_IMAGES  --push-threads 4
         ;;
     develop)
         echo "执行针对 develop 分支的操作..."
-        docker pull $REGISTRY/dongshanyi/base:develop
+        #docker pull $REGISTRY/dongshanyi/base:develop
         docker pull $REGISTRY/dongshanyi/openstack-base:develop
         ./tools/build.py $REPO --config-file ./etc/kolla/kolla-build.conf --push --registry $REGISTRY --namespace $NAMESPACE --tag develop --skip-images $SKIP_IMAGES --push-threads 4
         ;;
